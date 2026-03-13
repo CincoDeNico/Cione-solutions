@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cione Solutions LLC — AI Automation & Technology Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07090d;
+      --surface: #0c0f16;
+      --surface2: #111620;
+      --border: rgba(99,179,237,0.1);
+      --border2: rgba(99,179,237,0.06);
+      --accent: #4fa3e0;
+      --accent-bright: #7ec8f7;
+      --accent-warm: #f0a84a;
+      --accent-dim: rgba(79,163,224,0.1);
+      --accent-warm-dim: rgba(240,168,74,0.1);
+      --text: #dde6f0;
+      --muted: #7a8fa8;
+      --muted2: #3a4a5c;
+      --display: 'Barlow Condensed', sans-serif;
+      --body: 'DM Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--body); overflow-x: hidden; cursor: none; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(79,163,224,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(79,163,224,0.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .cursor { position: fixed; width: 8px; height: 8px; background: var(--accent-warm); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .15s, height .15s; left: -100px; top: -100px; }
+    .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(79,163,224,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); left: -100px; top: -100px; }
+
+    nav { position: fixed; top:0; left:0; right:0; z-index:500; display:flex; align-items:center; justify-content:space-between; padding:1.25rem 3.5rem; background:rgba(7,9,13,0.92); backdrop-filter:blur(16px); border-bottom:1px solid var(--border2); }
+    .nav-logo { display:flex; align-items:baseline; gap:0.4rem; text-decoration:none; }
+    .nav-logo-main { font-family:var(--display); font-size:1.1rem; font-weight:800; letter-spacing:0.1em; color:var(--text); text-transform:uppercase; }
+    .nav-logo-sub { font-family:var(--mono); font-size:0.58rem; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; }
+    .nav-links { display:flex; align-items:center; gap:2.5rem; list-style:none; }
+    .nav-links a { font-family:var(--mono); font-size:0.68rem; color:var(--muted); text-decoration:none; letter-spacing:0.1em; text-transform:uppercase; transition:color .2s; }
+    .nav-links a:hover { color:var(--accent); }
+    .nav-cta { font-family:var(--mono) !important; font-size:0.68rem !important; color:var(--bg) !important; background:var(--accent-warm); padding:0.5rem 1.25rem; letter-spacing:0.1em !important; text-transform:uppercase; text-decoration:none; transition:background .2s, transform .15s !important; cursor:none; }
+    .nav-cta:hover { background:#f7bc6a !important; transform:translateY(-1px) !important; color:var(--bg) !important; }
+
+    #hero { position:relative; min-height:100vh; display:flex; align-items:center; padding:0 3.5rem; z-index:1; overflow:hidden; }
+    .orb { position:absolute; border-radius:50%; pointer-events:none; filter:blur(90px); }
+    .orb-1 { width:550px; height:550px; background:radial-gradient(circle, rgba(79,163,224,0.07), transparent 70%); top:5%; left:-120px; animation:drift 14s ease-in-out infinite alternate; }
+    .orb-2 { width:420px; height:420px; background:radial-gradient(circle, rgba(240,168,74,0.055), transparent 70%); bottom:5%; right:-100px; animation:drift 18s ease-in-out infinite alternate-reverse; }
+    @keyframes drift { from{transform:translateY(0) scale(1);} to{transform:translateY(50px) scale(1.08);} }
+
+    .hero-inner { max-width:1160px; margin:0 auto; width:100%; padding-top:7rem; display:grid; grid-template-columns:1fr 360px; gap:5rem; align-items:center; }
+    .hero-eyebrow { display:flex; align-items:center; gap:0.75rem; font-family:var(--mono); font-size:0.65rem; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:1.6rem; opacity:0; animation:fadeUp .6s ease forwards .1s; }
+    .hero-eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--accent); flex-shrink:0; }
+    .hero-title { font-family:var(--display); font-size:clamp(4rem,8.5vw,7.2rem); font-weight:900; line-height:0.92; text-transform:uppercase; margin-bottom:1.8rem; opacity:0; animation:fadeUp .6s ease forwards .25s; }
+    .hero-title .outline { color:transparent; -webkit-text-stroke:1.5px rgba(79,163,224,0.35); }
+    .hero-title .spark { color:var(--accent-warm); }
+    .hero-body { font-size:1rem; color:var(--muted); line-height:1.75; max-width:480px; margin-bottom:2.5rem; opacity:0; animation:fadeUp .6s ease forwards .4s; font-weight:300; }
+    .hero-ctas { display:flex; gap:1rem; flex-wrap:wrap; opacity:0; animation:fadeUp .6s ease forwards .55s; }
+
+    .btn { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--mono); font-size:0.73rem; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; padding:0.9rem 2rem; border:none; cursor:none; transition:transform .15s, box-shadow .2s, background .2s; }
+    .btn:hover { transform:translateY(-2px); }
+    .btn-primary { background:var(--accent); color:var(--bg); font-weight:500; }
+    .btn-primary:hover { background:var(--accent-bright); box-shadow:0 10px 40px rgba(79,163,224,0.22); }
+    .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+    .btn-outline:hover { border-color:rgba(79,163,224,0.35); background:var(--accent-dim); }
+    .btn-warm { background:var(--accent-warm); color:var(--bg); font-weight:500; }
+    .btn-warm:hover { background:#f7bc6a; box-shadow:0 10px 40px rgba(240,168,74,0.25); }
+    .btn-warm-lg { font-size:0.85rem !important; padding:1.1rem 2.5rem !important; }
+
+    .hero-card { background:var(--surface); border:1px solid var(--border); padding:2rem; opacity:0; animation:fadeUp .7s ease forwards .7s; position:relative; }
+    .hero-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--accent-warm)); }
+    .hcard-label { font-family:var(--mono); font-size:0.6rem; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:1.5rem; }
+    .hcard-item { display:flex; align-items:flex-start; gap:0.75rem; padding:0.85rem 0; border-bottom:1px solid var(--border2); }
+    .hcard-item:last-child { border-bottom:none; }
+    .hdot { width:6px; height:6px; border-radius:50%; background:var(--accent-warm); margin-top:0.3rem; flex-shrink:0; }
+    .hitem-title { font-size:0.84rem; font-weight:500; margin-bottom:0.18rem; }
+    .hitem-sub { font-family:var(--mono); font-size:0.6rem; color:var(--muted); letter-spacing:0.04em; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+    section { position:relative; z-index:1; }
+    .section-inner { max-width:1160px; margin:0 auto; padding:7rem 3.5rem; }
+    .eyebrow { display:flex; align-items:center; gap:0.75rem; font-family:var(--mono); font-size:0.63rem; color:var(--accent); letter-spacing:0.22em; text-transform:uppercase; margin-bottom:1rem; }
+    .eyebrow::before { content:''; display:block; width:20px; height:1px; background:var(--accent); flex-shrink:0; }
+    .sec-title { font-family:var(--display); font-size:clamp(2rem,4.5vw,3.4rem); font-weight:800; letter-spacing:0.01em; text-transform:uppercase; line-height:1.0; margin-bottom:1rem; }
+    .sec-desc { font-size:0.93rem; color:var(--muted); line-height:1.75; max-width:520px; font-weight:300; }
+
+    #services { background:var(--surface); border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); }
+    .services-hd { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4rem; gap:2rem; flex-wrap:wrap; }
+    .services-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border2); }
+    .svc { background:var(--surface); padding:2.5rem 2.2rem; position:relative; overflow:hidden; transition:background .25s; }
+    .svc:hover { background:var(--surface2); }
+    .svc::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, var(--accent), transparent); opacity:0; transition:opacity .3s; }
+    .svc:hover::after { opacity:0.45; }
+    .svc-num { font-family:var(--mono); font-size:0.58rem; color:var(--muted2); letter-spacing:0.15em; margin-bottom:1.8rem; }
+    .svc-title { font-family:var(--display); font-size:1.3rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:1rem; line-height:1.15; }
+    .svc-desc { font-size:0.87rem; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:1.5rem; }
+    .tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
+    .tag { font-family:var(--mono); font-size:0.58rem; color:var(--muted); background:rgba(255,255,255,0.025); border:1px solid var(--border2); padding:0.18rem 0.52rem; letter-spacing:0.04em; }
+
+    .ingage-callout { margin-top:1px; background:var(--surface); border-top:1px solid var(--border2); padding:2rem 2.2rem; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; transition:background .25s; }
+    .ingage-callout:hover { background:var(--surface2); }
+    .ingage-callout-left { display:flex; align-items:center; gap:1.5rem; }
+    .ingage-logo-wrap { display:flex; align-items:center; background:rgba(0,0,0,0.3); border:1px solid rgba(240,168,74,0.15); padding:0.5rem 1rem; flex-shrink:0; }
+    .ingage-logo-wrap img { height:22px; width:auto; display:block; }
+    .ingage-callout-text strong { font-family:var(--display); font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:0.2rem; }
+    .ingage-callout-text span { font-size:0.83rem; color:var(--muted); font-weight:300; }
+    .ingage-cta { display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--mono); font-size:0.68rem; color:var(--accent-warm); text-decoration:none; letter-spacing:0.1em; text-transform:uppercase; border:1px solid rgba(240,168,74,0.25); padding:0.62rem 1.2rem; cursor:none; transition:background .2s, border-color .2s, transform .15s; white-space:nowrap; }
+    .ingage-cta:hover { background:var(--accent-warm-dim); border-color:rgba(240,168,74,0.5); transform:translateY(-1px); }
+
+    #why { background:var(--bg); border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); }
+    .why-inner { max-width:1160px; margin:0 auto; padding:7rem 3.5rem; }
+    .why-top { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:end; margin-bottom:4rem; }
+    .pain-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border2); }
+    .pain-card { background:var(--surface); padding:2.5rem 2.2rem; position:relative; transition:background .25s; }
+    .pain-card:hover { background:var(--surface2); }
+    .pain-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:transparent; transition:background .3s; }
+    .pain-card:hover::before { background:linear-gradient(90deg, var(--accent-warm), transparent); }
+    .pain-x { font-family:var(--display); font-size:2.2rem; font-weight:900; color:rgba(240,168,74,0.25); line-height:1; margin-bottom:1.2rem; transition:color .25s; }
+    .pain-card:hover .pain-x { color:var(--accent-warm); }
+    .pain-title { font-family:var(--display); font-size:1.15rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.75rem; line-height:1.15; }
+    .pain-desc { font-size:0.87rem; color:#9db4cc; line-height:1.7; font-weight:300; }
+
+    #savings-cta { position:relative; z-index:1; background:var(--surface2); border-top:1px solid rgba(240,168,74,0.15); border-bottom:1px solid rgba(240,168,74,0.15); overflow:hidden; }
+    #savings-cta::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 60% 50%, rgba(240,168,74,0.06), transparent 65%); pointer-events:none; }
+    .scta-inner { max-width:1160px; margin:0 auto; padding:6rem 3.5rem; display:grid; grid-template-columns:1fr auto; gap:4rem; align-items:center; }
+    .scta-eyebrow { font-family:var(--mono); font-size:0.63rem; color:var(--accent-warm); letter-spacing:0.22em; text-transform:uppercase; margin-bottom:1.2rem; display:flex; align-items:center; gap:0.6rem; }
+    .scta-eyebrow::before { content:''; display:block; width:18px; height:1px; background:var(--accent-warm); }
+    .scta-title { font-family:var(--display); font-size:clamp(2rem,4vw,3.2rem); font-weight:900; text-transform:uppercase; line-height:1.05; margin-bottom:1.2rem; }
+    .scta-title .hi { color:var(--accent-warm); }
+    .scta-body { font-size:1rem; color:var(--muted); line-height:1.75; font-weight:300; max-width:580px; }
+    .scta-body strong { color:var(--text); font-weight:500; }
+    .scta-right { display:flex; flex-direction:column; align-items:center; gap:1rem; text-align:center; min-width:220px; }
+    .scta-free { font-family:var(--mono); font-size:0.62rem; color:var(--accent-warm); letter-spacing:0.18em; text-transform:uppercase; opacity:0.7; }
+
+    #pricing { background:var(--bg); }
+    .pricing-intro { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:end; margin-bottom:4rem; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border2); }
+    .pcard { background:var(--surface); padding:2.5rem 2rem; position:relative; transition:background .25s; }
+    .pcard:hover { background:var(--surface2); }
+    .pcard.feat { background:var(--surface2); }
+    .pcard.feat::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--accent-warm)); }
+    .ptier { font-family:var(--mono); font-size:0.6rem; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:1.4rem; }
+    .pname { font-family:var(--display); font-size:1.45rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.6rem; }
+    .pmodel { font-family:var(--mono); font-size:0.7rem; color:var(--accent-warm); letter-spacing:0.08em; margin-bottom:1.8rem; }
+    .pdivider { height:1px; background:var(--border2); margin-bottom:1.5rem; }
+    .pfeats { list-style:none; display:flex; flex-direction:column; gap:0.7rem; margin-bottom:2rem; }
+    .pfeats li { font-size:0.84rem; color:var(--muted); display:flex; align-items:flex-start; gap:0.55rem; line-height:1.5; font-weight:300; }
+    .pfeats li::before { content:'→'; color:var(--accent); font-family:var(--mono); font-size:0.68rem; flex-shrink:0; margin-top:0.08rem; }
+    .pcta { display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--mono); font-size:0.68rem; color:var(--accent); text-decoration:none; letter-spacing:0.1em; text-transform:uppercase; border:1px solid rgba(79,163,224,0.22); padding:0.62rem 1.15rem; cursor:none; transition:background .2s, border-color .2s, transform .15s; }
+    .pcta:hover { background:var(--accent-dim); border-color:rgba(79,163,224,0.5); transform:translateY(-1px); }
+    .pricing-footer-note { margin-top:2.5rem; padding:1.5rem 2rem; background:var(--surface); border:1px solid var(--border2); display:flex; align-items:center; gap:1.5rem; }
+    .pfn-icon { font-size:1.2rem; flex-shrink:0; }
+    .pfn-text { font-family:var(--mono); font-size:0.7rem; color:var(--muted); line-height:1.7; letter-spacing:0.04em; }
+    .pfn-text strong { color:var(--accent); font-weight:500; }
+
+    #about { background:var(--surface); border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); }
+    .about-grid { display:grid; grid-template-columns:1.1fr 1fr; gap:6rem; align-items:start; margin-top:4rem; }
+    .about-body p { font-size:0.93rem; color:var(--muted); line-height:1.8; margin-bottom:1rem; font-weight:300; }
+    .about-body p strong { color:var(--text); font-weight:500; }
+    .linkedin-link { display:inline-flex; align-items:center; gap:0.55rem; font-family:var(--mono); font-size:0.7rem; color:var(--accent); text-decoration:none; border:1px solid var(--border); padding:0.6rem 1rem; margin-top:1.5rem; transition:border-color .2s, background .2s; cursor:none; }
+    .linkedin-link:hover { border-color:rgba(79,163,224,0.4); background:var(--accent-dim); }
+    .linkedin-icon { width:14px; height:14px; fill:var(--accent); flex-shrink:0; }
+    .stack-wrap { margin-top:2rem; }
+    .stack-label { font-family:var(--mono); font-size:0.6rem; color:var(--muted2); letter-spacing:0.18em; text-transform:uppercase; margin-bottom:0.9rem; }
+    .stack-tags { display:flex; flex-wrap:wrap; gap:0.45rem; }
+
+    .terminal { background:#070a0f; border:1px solid var(--border); position:relative; }
+    .terminal::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, var(--accent), var(--accent-warm), transparent); }
+    .t-header { display:flex; align-items:center; gap:0.42rem; padding:0.82rem 1.15rem; border-bottom:1px solid var(--border2); }
+    .tdot { width:9px; height:9px; border-radius:50%; }
+    .tdot:nth-child(1){background:#ff5f57;} .tdot:nth-child(2){background:#febc2e;} .tdot:nth-child(3){background:#28c840;}
+    .t-title { font-family:var(--mono); font-size:0.58rem; color:var(--muted2); letter-spacing:0.1em; margin-left:auto; }
+    .t-body { padding:1.5rem 1.5rem 1.8rem; }
+    .tl { font-family:var(--mono); font-size:0.74rem; line-height:1.9; color:var(--muted); }
+    .tl .p{color:var(--accent);} .tl .s{color:#e9a84c;} .tl .c{color:var(--muted2); font-style:italic;} .tl .hi{color:var(--text);} .tl .w{color:var(--accent-warm);}
+    .cblink { display:inline-block; width:7px; height:13px; background:var(--accent); animation:blink 1s step-end infinite; vertical-align:middle; }
+
+    #process { background:var(--bg); }
+    .process-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border2); margin-top:4rem; }
+    .pstep { background:var(--surface); padding:2.2rem 1.8rem; transition:background .25s; }
+    .pstep:hover { background:var(--surface2); }
+    .pstep-num { font-family:var(--display); font-size:3.5rem; font-weight:900; color:rgba(79,163,224,0.08); line-height:1; margin-bottom:1.2rem; transition:color .25s; }
+    .pstep:hover .pstep-num { color:rgba(79,163,224,0.15); }
+    .pstep-title { font-family:var(--display); font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.7rem; color:var(--text); }
+    .pstep-desc { font-size:0.85rem; color:#9db4cc; line-height:1.7; font-weight:300; }
+
+    #contact { background:var(--surface); border-top:1px solid var(--border2); }
+    .contact-grid { display:grid; grid-template-columns:1fr 1.3fr; gap:6rem; margin-top:4rem; align-items:start; }
+    .cleft h3 { font-family:var(--display); font-size:1.05rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem; }
+    .cleft p { font-size:0.87rem; color:var(--muted); line-height:1.7; margin-bottom:1.8rem; font-weight:300; }
+    .email-link { display:inline-flex; align-items:center; gap:0.65rem; font-family:var(--mono); font-size:0.92rem; color:var(--accent); text-decoration:none; border:1px solid var(--border); padding:0.85rem 1.4rem; margin-bottom:2.5rem; transition:border-color .2s, background .2s; cursor:none; }
+    .email-link:hover { border-color:rgba(79,163,224,0.35); background:var(--accent-dim); }
+
+    .ftoggle { display:flex; border:1px solid var(--border); margin-bottom:1.8rem; }
+    .ftbtn { flex:1; padding:0.68rem 1rem; font-family:var(--mono); font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; background:transparent; color:var(--muted); border:none; cursor:none; transition:background .2s, color .2s; }
+    .ftbtn.active { background:var(--accent-dim); color:var(--accent); }
+    .ftbtn:first-child { border-right:1px solid var(--border); }
+    .fpanel { display:none; flex-direction:column; gap:1.1rem; }
+    .fpanel.active { display:flex; }
+    .frow { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+    .fg { display:flex; flex-direction:column; gap:0.38rem; }
+    .fg label { font-family:var(--mono); font-size:0.58rem; color:var(--accent); letter-spacing:0.18em; text-transform:uppercase; }
+    .fg input, .fg textarea, .fg select { background:var(--bg); border:1px solid var(--border2); color:var(--text); font-family:var(--body); font-size:0.87rem; font-weight:300; padding:0.72rem 0.95rem; outline:none; transition:border-color .2s; resize:vertical; appearance:none; }
+    .fg input:focus, .fg textarea:focus, .fg select:focus { border-color:rgba(79,163,224,0.38); }
+    .fg input::placeholder, .fg textarea::placeholder { color:var(--muted2); }
+    .fg select option { background:var(--surface); }
+    .fsub { align-self:flex-start; display:inline-flex; align-items:center; gap:0.45rem; padding:0.85rem 2rem; background:var(--accent); color:var(--bg); font-family:var(--mono); font-size:0.7rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; border:none; cursor:none; transition:background .2s, transform .15s, box-shadow .2s; }
+    .fsub:hover { background:var(--accent-bright); transform:translateY(-2px); box-shadow:0 10px 36px rgba(79,163,224,0.18); }
+    .fsuccess { display:none; background:rgba(79,163,224,0.06); border:1px solid rgba(79,163,224,0.18); padding:1rem 1.15rem; font-family:var(--mono); font-size:0.7rem; color:var(--accent); letter-spacing:0.05em; line-height:1.6; }
+
+    footer { position:relative; z-index:1; border-top:1px solid var(--border2); padding:2rem 3.5rem; display:flex; align-items:center; justify-content:space-between; background:var(--bg); }
+    .fl { font-family:var(--mono); font-size:0.63rem; color:var(--muted2); letter-spacing:0.1em; }
+    .fr { font-family:var(--mono); font-size:0.6rem; color:var(--muted2); opacity:0.45; }
+
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem;} .nav-links{display:none;}
+      .section-inner,.why-inner{padding:5rem 1.5rem;} #hero{padding:0 1.5rem;}
+      .hero-inner{grid-template-columns:1fr; gap:2.5rem;} .hero-card{display:none;}
+      .services-grid,.pain-grid,.pricing-grid,.process-grid{grid-template-columns:1fr;}
+      .why-top,.pricing-intro,.about-grid,.contact-grid{grid-template-columns:1fr; gap:2.5rem;}
+      .scta-inner{grid-template-columns:1fr; gap:2rem;}
+      .scta-right{align-items:flex-start; text-align:left;}
+      .frow{grid-template-columns:1fr;}
+      .ingage-callout{flex-direction:column; align-items:flex-start;}
+      footer{flex-direction:column; gap:0.5rem; text-align:center;}
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav>
+    <a href="#hero" class="nav-logo">
+      <span class="nav-logo-main">Cione Solutions</span>
+      <span class="nav-logo-sub">LLC</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Automate</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="hero-inner">
+      <div>
+        <p class="hero-eyebrow">AI Automation &amp; Technology Consulting</p>
+        <h1 class="hero-title">
+          Automate<br>
+          <span class="outline">the Work.</span><br>
+          <span class="spark">Accelerate</span><br>
+          <span class="outline">the Growth.</span>
+        </h1>
+        <p class="hero-body">Senior-level AI automation engineering and technology consulting — without the overhead of a full engineering team. We find the waste, eliminate it, and build systems that scale with you.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-warm">Book a Free Discovery Call &rarr;</a>
+          <a href="#why" class="btn btn-outline">See What&apos;s Costing You</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hcard-label">// What we deliver</div>
+        <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">AI Implementation Consulting</div><div class="hitem-sub">Strategy &middot; Adoption &middot; Enablement</div></div></div>
+        <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">AI Workflow Automation</div><div class="hitem-sub">n8n &middot; LLM Pipelines &middot; Integrations</div></div></div>
+        <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">Embedded Sales Tools</div><div class="hitem-sub">Interactive Calculators &middot; Ingage Apps</div></div></div>
+        <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">Starts with a 15-min call</div><div class="hitem-sub">Free. No pitch. Just discovery.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-inner">
+      <div class="services-hd">
+        <div>
+          <p class="eyebrow reveal">What We Do</p>
+          <h2 class="sec-title reveal">Two ways we move<br>your business forward.</h2>
+        </div>
+        <p class="sec-desc reveal" style="margin-bottom:0">Each engagement starts with understanding your stack and your goals &mdash; not a templated solution dropped in your lap.</p>
+      </div>
+      <div class="services-grid reveal">
+        <div class="svc">
+          <div class="svc-num">01 &mdash;&mdash;</div>
+          <div class="svc-title">AI Automation &amp;<br>Workflow Engineering</div>
+          <p class="svc-desc">Custom automation pipelines that eliminate manual work, connect your existing tools, and run without babysitting. From simple integrations to multi-system LLM-powered orchestration.</p>
+          <div class="tags"><span class="tag">n8n</span><span class="tag">LLM Pipelines</span><span class="tag">Slack Bots</span><span class="tag">API Integration</span><span class="tag">HubSpot</span><span class="tag">Notion</span><span class="tag">Google Workspace</span></div>
+        </div>
+        <div class="svc">
+          <div class="svc-num">02 &mdash;&mdash;</div>
+          <div class="svc-title">AI Implementation<br>&amp; Consulting</div>
+          <p class="svc-desc">Not sure where AI fits in your business? We identify the highest-value opportunities in your existing stack, build a practical adoption roadmap, and implement solutions your team will actually use &mdash; not just talk about.</p>
+          <div class="tags"><span class="tag">AI Strategy</span><span class="tag">Tool Adoption</span><span class="tag">Process Mapping</span><span class="tag">Stack Audits</span><span class="tag">Team Enablement</span></div>
+        </div>
+      </div>
+      <div class="ingage-callout reveal">
+        <div class="ingage-callout-left">
+          <div class="ingage-logo-wrap">
+            <img src="ingage_logo.png" alt="Ingage" />
+          </div>
+          <div class="ingage-callout-text">
+            <strong>Looking for Custom Ingage Applications?</strong>
+            <span>We build purpose-built pricing calculators and sales tools exclusively for the Ingage platform. If you&apos;re an Ingage user, you&apos;re in the right place.</span>
+          </div>
+        </div>
+        <a href="#contact" class="ingage-cta">Get in Touch &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="why-inner">
+      <div class="why-top reveal">
+        <div>
+          <p class="eyebrow">The Real Cost of Doing Nothing</p>
+          <h2 class="sec-title">Your biggest competitor<br>isn&apos;t another business.<br><span style="color:var(--accent-warm)">It&apos;s wasted time and money.</span></h2>
+        </div>
+        <p class="sec-desc">Most businesses aren&apos;t short on ambition &mdash; they&apos;re buried in manual tasks, locked into SaaS tools they barely use, and running on systems that were never designed to work together. Every day that goes unaddressed is revenue left on the table.</p>
+      </div>
+      <div class="pain-grid reveal">
+        <div class="pain-card">
+          <div class="pain-x">&times;</div>
+          <div class="pain-title">SaaS Subscriptions<br>Nobody Actually Uses</div>
+          <p class="pain-desc">You&apos;re paying monthly for five tools that do three jobs. Features that overlap, seats that sit empty, platforms that made sense two years ago but nobody logs into anymore. That&apos;s real money leaving your business every single month &mdash; quietly, automatically, without anyone noticing.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-x">&times;</div>
+          <div class="pain-title">Hours Lost to<br>Manual Busywork</div>
+          <p class="pain-desc">Copy-pasting data between systems. Manually sending the same report every Monday. Updating spreadsheets by hand. Chasing people for status updates that could trigger themselves. Your team&apos;s time is your most expensive resource &mdash; and right now, a significant chunk of it is going to work that should have been automated.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-x">&times;</div>
+          <div class="pain-title">Disconnected Tools<br>Creating Blind Spots</div>
+          <p class="pain-desc">Your CRM doesn&apos;t talk to your project management tool. Your billing platform doesn&apos;t sync with your reporting. Data lives in three different places and nobody fully trusts any of it. When your systems don&apos;t connect, decisions get made on incomplete information &mdash; and that costs more than any subscription.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="savings-cta">
+    <div class="scta-inner reveal">
+      <div>
+        <div class="scta-eyebrow">Free 15-Minute Discovery Call</div>
+        <h2 class="scta-title">How much is your business<br>leaving on the table <span class="hi">right now?</span></h2>
+        <p class="scta-body">Most business owners are surprised by the answer. In a single 15-minute call, we can identify <strong>which of your SaaS tools are redundant</strong>, <strong>which manual processes could be fully automated</strong>, and what a realistic roadmap looks like for your specific business &mdash; at no cost and with zero obligation. The only thing it costs you is 15 minutes.</p>
+      </div>
+      <div class="scta-right">
+        <a href="#contact" class="btn btn-warm btn-warm-lg">Find Out Now &rarr;</a>
+        <span class="scta-free">100% free &middot; no obligation &middot; no pitch</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="section-inner">
+      <div class="pricing-intro">
+        <div>
+          <p class="eyebrow reveal">How We Price</p>
+          <h2 class="sec-title reveal">Scoped to your needs.<br>No surprises.</h2>
+        </div>
+        <p class="sec-desc reveal" style="margin-bottom:0">Pricing is always confirmed upfront after a free discovery call &mdash; before any work begins. You&apos;ll never receive an invoice for something you didn&apos;t agree to.</p>
+      </div>
+      <div class="pricing-grid reveal">
+        <div class="pcard">
+          <div class="ptier">Custom Applications</div>
+          <div class="pname">Flat Rate</div>
+          <div class="pmodel">One-time fixed project fee</div>
+          <div class="pdivider"></div>
+          <ul class="pfeats">
+            <li>Fixed price scoped before work begins &mdash; no surprises</li>
+            <li>Tiered by complexity, from simple tools to full multi-calculator builds</li>
+            <li>Complete handoff with documentation included</li>
+            <li>One round of revisions included</li>
+            <li>No ongoing commitment required</li>
+          </ul>
+          <a href="#contact" class="pcta">Get a Quote &rarr;</a>
+        </div>
+        <div class="pcard feat">
+          <div class="ptier">Automation Engineering</div>
+          <div class="pname">Fixed + Optional Retainer</div>
+          <div class="pmodel">Fixed project price &middot; managed hosting available</div>
+          <div class="pdivider"></div>
+          <ul class="pfeats">
+            <li>Fixed project price scoped and agreed upfront after discovery</li>
+            <li>You know the full cost before a single line is written</li>
+            <li>Choose full handoff with docs &mdash; or ongoing managed hosting</li>
+            <li>Managed hosting at a fixed monthly rate &mdash; cancel anytime</li>
+            <li>Managed tier covers monitoring, updates, and fixes</li>
+          </ul>
+          <a href="#contact" class="pcta">Book Discovery Call &rarr;</a>
+        </div>
+        <div class="pcard">
+          <div class="ptier">AI Consulting</div>
+          <div class="pname">Advisory</div>
+          <div class="pmodel">Hourly &middot; retainer available</div>
+          <div class="pdivider"></div>
+          <ul class="pfeats">
+            <li>AI opportunity audit across your existing stack</li>
+            <li>Practical adoption roadmap &mdash; no fluff</li>
+            <li>Tool and vendor recommendations</li>
+            <li>Team enablement and training sessions</li>
+            <li>Ongoing advisory retainer available</li>
+          </ul>
+          <a href="#contact" class="pcta">Start with a Call &rarr;</a>
+        </div>
+      </div>
+      <div class="pricing-footer-note reveal">
+        <span class="pfn-icon">&#128172;</span>
+        <p class="pfn-text"><strong>All engagements begin with a free 15-minute discovery call.</strong> We&apos;ll understand your situation, scope the work, and give you exact pricing &mdash; before you commit to anything. No obligation, no pitch.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-inner">
+      <p class="eyebrow reveal">Who&apos;s Behind It</p>
+      <div class="about-grid">
+        <div class="about-body reveal">
+          <h2 class="sec-title" style="margin-bottom:1.4rem">Built by someone<br>who&apos;s already done it.</h2>
+          <p>Cione Solutions was founded by <strong>Nico Cione</strong>, an AI Automation Engineer with hands-on experience building production automation systems, LLM-powered workflows, and custom tooling for real businesses &mdash; not just demos.</p>
+          <p>Having built internal automation practices from the ground up &mdash; spanning CRM integrations, AI digest pipelines, market intelligence dashboards, sales tooling, and Slack bots &mdash; the work here isn&apos;t theoretical. It&apos;s the same methodology applied directly to your business.</p>
+          <p>The firm works best with <strong>small to mid-sized businesses</strong> that move fast, have real operational friction, and want solutions that actually ship &mdash; not six-month consulting engagements with a 200-page deck at the end.</p>
+          <a href="https://linkedin.com/in/nicocione" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+            <svg class="linkedin-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            View LinkedIn Profile &rarr;
+          </a>
+          <div class="stack-wrap">
+            <div class="stack-label">Tech stack fluency</div>
+            <div class="stack-tags"><span class="tag">n8n</span><span class="tag">Anthropic API</span><span class="tag">OpenAI</span><span class="tag">HubSpot</span><span class="tag">Notion</span><span class="tag">Slack</span><span class="tag">Google Workspace</span><span class="tag">REST APIs</span><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">HTML/CSS</span><span class="tag">Google Cloud</span><span class="tag">Ingage</span></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="terminal">
+            <div class="t-header"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div><span class="t-title">founder.profile</span></div>
+            <div class="t-body">
+              <div class="tl"><span class="p">$</span> whoami</div>
+              <div class="tl" style="margin-bottom:.8rem"><span class="hi">Nico Cione</span> &mdash; Founder &amp; Principal Engineer</div>
+              <div class="tl"><span class="p">$</span> cat focus.txt</div>
+              <div class="tl"><span class="s">&quot;AI Automation Engineering&quot;</span></div>
+              <div class="tl"><span class="s">&quot;LLM Pipeline Architecture&quot;</span></div>
+              <div class="tl"><span class="s">&quot;Custom Application Dev&quot;</span></div>
+              <div class="tl" style="margin-bottom:.8rem"><span class="s">&quot;AI Implementation &amp; Adoption&quot;</span></div>
+              <div class="tl"><span class="p">$</span> cat approach.txt</div>
+              <div class="tl"><span class="w">&quot;Ship fast. Document well.&quot;</span></div>
+              <div class="tl" style="margin-bottom:.8rem"><span class="w">&quot;Practical over theoretical.&quot;</span></div>
+              <div class="tl"><span class="p">$</span> location</div>
+              <div class="tl" style="margin-bottom:.8rem"><span class="hi">Remote-first. Available everywhere.</span></div>
+              <div class="tl"><span class="p">$</span> availability</div>
+              <div class="tl"><span class="hi">Open to new projects</span> <span class="cblink"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="section-inner">
+      <p class="eyebrow reveal">How It Works</p>
+      <h2 class="sec-title reveal" style="margin-bottom:.5rem">From first call<br>to live solution.</h2>
+      <p class="sec-desc reveal" style="margin-top:.8rem">A straightforward process designed to move fast and stay aligned &mdash; without unnecessary overhead.</p>
+      <div class="process-grid reveal">
+        <div class="pstep"><div class="pstep-num">01</div><div class="pstep-title">Discovery Call</div><p class="pstep-desc">A free 15-minute conversation to understand your stack, your team&apos;s pain points, and where automation or AI can have the most impact. No pitch &mdash; just listening.</p></div>
+        <div class="pstep"><div class="pstep-num">02</div><div class="pstep-title">Scoping &amp; Proposal</div><p class="pstep-desc">A concise written proposal outlining specific solutions, deliverables, timeline, and fixed pricing. You know exactly what you&apos;re getting before any work begins.</p></div>
+        <div class="pstep"><div class="pstep-num">03</div><div class="pstep-title">Build &amp; Iterate</div><p class="pstep-desc">Work begins quickly. You&apos;re kept in the loop with progress updates and have input at key checkpoints. Most projects ship within days, not weeks.</p></div>
+        <div class="pstep"><div class="pstep-num">04</div><div class="pstep-title">Handoff or Manage</div><p class="pstep-desc">Choose a full handoff with documentation, or opt into managed hosting where we monitor, maintain, and update your automation long-term.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-inner">
+      <p class="eyebrow reveal">Get In Touch</p>
+      <h2 class="sec-title reveal">Let&apos;s find out what<br>you&apos;re leaving on the table.</h2>
+      <div class="contact-grid">
+        <div class="cleft reveal">
+          <h3>Start with a conversation.</h3>
+          <p>Most engagements begin with a free 15-minute discovery call &mdash; no pressure, no pitch. Just a chance to understand your situation and see if there&apos;s a fit. If you already know what you need, use the project form and we&apos;ll get straight to scoping.</p>
+          <h3>Prefer email?</h3>
+          <p>Reach out directly. Expect a response within one business day.</p>
+          <a href="mailto:nico&#64;cionesolutions.com" class="email-link">&#9993; nico&#64;cionesolutions.com</a>
+        </div>
+        <div class="reveal">
+          <div class="ftoggle">
+            <button class="ftbtn active" onclick="switchForm('disc')" id="btn-disc">Book a Discovery Call</button>
+            <button class="ftbtn" onclick="switchForm('proj')" id="btn-proj">I Know What I Need</button>
+          </div>
+          <form class="fpanel active" id="form-disc" action="https://formspree.io/f/mzdjgojd" method="POST">
+            <input type="hidden" name="form_type" value="Discovery Call Request" />
+            <div class="frow">
+              <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required /></div>
+              <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required /></div>
+            </div>
+            <div class="fg"><label>Company</label><input type="text" name="company" placeholder="Optional" /></div>
+            <div class="fg">
+              <label>Area of Interest</label>
+              <select name="interest">
+                <option value="" disabled selected>Select one</option>
+                <option>AI Automation &amp; Workflow Engineering</option>
+                <option>Custom Ingage Application Development</option>
+                <option>AI Implementation &amp; Consulting</option>
+                <option>Not sure yet &mdash; want to explore</option>
+              </select>
+            </div>
+            <div class="fg"><label>Anything to add? (optional)</label><textarea name="message" rows="3" placeholder="Brief context if helpful..."></textarea></div>
+            <button type="submit" class="fsub">Request Discovery Call &rarr;</button>
+            <div class="fsuccess" id="succ-disc">// Got it &mdash; I&apos;ll reach out within one business day to schedule a time.</div>
+          </form>
+          <form class="fpanel" id="form-proj" action="https://formspree.io/f/mzdjgojd" method="POST">
+            <input type="hidden" name="form_type" value="Project Inquiry" />
+            <div class="frow">
+              <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required /></div>
+              <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required /></div>
+            </div>
+            <div class="frow">
+              <div class="fg"><label>Company</label><input type="text" name="company" placeholder="Optional" /></div>
+              <div class="fg">
+                <label>Service Type</label>
+                <select name="service" required>
+                  <option value="" disabled selected>Select one</option>
+                  <option>AI Automation &amp; Workflow Engineering</option>
+                  <option>Custom Ingage Application Development</option>
+                  <option>AI Implementation &amp; Consulting</option>
+                </select>
+              </div>
+            </div>
+            <div class="fg"><label>Tools / Platforms Involved</label><input type="text" name="tools" placeholder="e.g. HubSpot, Slack, Notion, Ingage..." /></div>
+            <div class="fg"><label>Project Description</label><textarea name="message" rows="4" placeholder="Describe what you&apos;re trying to build or automate..." required></textarea></div>
+            <div class="fg">
+              <label>Preferred Delivery Model</label>
+              <select name="delivery">
+                <option value="" disabled selected>Select one</option>
+                <option>Managed &mdash; host and maintain for me</option>
+                <option>Handoff &mdash; build and hand over with docs</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <button type="submit" class="fsub">Submit Project Inquiry &rarr;</button>
+            <div class="fsuccess" id="succ-proj">// Project inquiry received. I&apos;ll follow up with questions or a proposal within one business day.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fl">CIONE SOLUTIONS LLC</div>
+    <div class="fr">&copy; 2026 Cione Solutions LLC. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+    (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='46px';ring.style.height='46px';});
+      el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px';});
+    });
+    const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*55);});},{threshold:.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    function switchForm(t){['disc','proj'].forEach(id=>{document.getElementById('form-'+id).classList.toggle('active',id===t);document.getElementById('btn-'+id).classList.toggle('active',id===t);});}
+    ['disc','proj'].forEach(id=>{
+      const form=document.getElementById('form-'+id),succ=document.getElementById('succ-'+id);
+      form.addEventListener('submit',async e=>{
+        e.preventDefault();
+        const btn=form.querySelector('.fsub'),orig=btn.textContent;
+        btn.textContent='Sending...';
+        try {
+          const res = await fetch(form.action, {method:'POST', body:new FormData(form), headers:{Accept:'application/json'}});
+          if(res.ok){form.style.display='none';succ.style.display='block';}
+          else{btn.textContent=orig;}
+        } catch(err){btn.textContent=orig;}
+      });
+    });
+  </script>
+</body>
+</html>
