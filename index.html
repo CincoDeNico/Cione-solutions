@@ -98,7 +98,7 @@
 
     #services { background:var(--surface); border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); }
     .services-hd { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4rem; gap:2rem; flex-wrap:wrap; }
-    .services-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border2); }
+    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border2); }
     .svc { background:var(--surface); padding:2.5rem 2.2rem; position:relative; overflow:hidden; transition:background .25s; }
     .svc:hover { background:var(--surface2); }
     .svc::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, var(--accent), transparent); opacity:0; transition:opacity .3s; }
@@ -108,16 +108,6 @@
     .svc-desc { font-size:0.87rem; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:1.5rem; }
     .tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
     .tag { font-family:var(--mono); font-size:0.58rem; color:var(--muted); background:rgba(255,255,255,0.025); border:1px solid var(--border2); padding:0.18rem 0.52rem; letter-spacing:0.04em; }
-
-    .ingage-callout { margin-top:1px; background:var(--surface); border-top:1px solid var(--border2); padding:2rem 2.2rem; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; transition:background .25s; }
-    .ingage-callout:hover { background:var(--surface2); }
-    .ingage-callout-left { display:flex; align-items:center; gap:1.5rem; }
-    .ingage-logo-wrap { display:flex; align-items:center; background:rgba(0,0,0,0.3); border:1px solid rgba(240,168,74,0.15); padding:0.5rem 1rem; flex-shrink:0; }
-    .ingage-logo-wrap img { height:22px; width:auto; display:block; }
-    .ingage-callout-text strong { font-family:var(--display); font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:0.2rem; }
-    .ingage-callout-text span { font-size:0.83rem; color:var(--muted); font-weight:300; }
-    .ingage-cta { display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--mono); font-size:0.68rem; color:var(--accent-warm); text-decoration:none; letter-spacing:0.1em; text-transform:uppercase; border:1px solid rgba(240,168,74,0.25); padding:0.62rem 1.2rem; cursor:none; transition:background .2s, border-color .2s, transform .15s; white-space:nowrap; }
-    .ingage-cta:hover { background:var(--accent-warm-dim); border-color:rgba(240,168,74,0.5); transform:translateY(-1px); }
 
     #why { background:var(--bg); border-top:1px solid var(--border2); border-bottom:1px solid var(--border2); }
     .why-inner { max-width:1160px; margin:0 auto; padding:7rem 3.5rem; }
@@ -238,7 +228,6 @@
       .scta-inner{grid-template-columns:1fr; gap:2rem;}
       .scta-right{align-items:flex-start; text-align:left;}
       .frow{grid-template-columns:1fr;}
-      .ingage-callout{flex-direction:column; align-items:flex-start;}
       footer{flex-direction:column; gap:0.5rem; text-align:center;}
     }
   </style>
@@ -284,7 +273,7 @@
         <div class="hcard-label">// What we deliver</div>
         <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">AI Implementation Consulting</div><div class="hitem-sub">Strategy &middot; Adoption &middot; Enablement</div></div></div>
         <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">AI Workflow Automation</div><div class="hitem-sub">n8n &middot; LLM Pipelines &middot; Integrations</div></div></div>
-        <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">Embedded Sales Tools</div><div class="hitem-sub">Interactive Calculators &middot; Ingage Apps</div></div></div>
+        <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">Data Pipelines &amp; BI</div><div class="hitem-sub">ETL &middot; Dashboards &middot; BI Platforms</div></div></div>
         <div class="hcard-item"><div class="hdot"></div><div><div class="hitem-title">Starts with a 15-min call</div><div class="hitem-sub">Free. No pitch. Just discovery.</div></div></div>
       </div>
     </div>
@@ -295,7 +284,7 @@
       <div class="services-hd">
         <div>
           <p class="eyebrow reveal">What We Do</p>
-          <h2 class="sec-title reveal">Two ways we move<br>your business forward.</h2>
+          <h2 class="sec-title reveal">Three ways we move<br>your business forward.</h2>
         </div>
         <p class="sec-desc reveal" style="margin-bottom:0">Each engagement starts with understanding your stack and your goals &mdash; not a templated solution dropped in your lap.</p>
       </div>
@@ -304,26 +293,20 @@
           <div class="svc-num">01 &mdash;&mdash;</div>
           <div class="svc-title">AI Automation &amp;<br>Workflow Engineering</div>
           <p class="svc-desc">Custom automation pipelines that eliminate manual work, connect your existing tools, and run without babysitting. From simple integrations to multi-system LLM-powered orchestration.</p>
-          <div class="tags"><span class="tag">n8n</span><span class="tag">LLM Pipelines</span><span class="tag">Slack Bots</span><span class="tag">API Integration</span><span class="tag">HubSpot</span><span class="tag">Notion</span><span class="tag">Google Workspace</span></div>
+          <div class="tags"><span class="tag">n8n</span><span class="tag">LLM Pipelines</span><span class="tag">Slack Bots</span><span class="tag">API Integration</span><span class="tag">HubSpot</span><span class="tag">Notion</span><span class="tag">Google Workspace</span><span class="tag">Data Pipelines</span><span class="tag">ETL</span><span class="tag">BI Platforms</span></div>
         </div>
         <div class="svc">
           <div class="svc-num">02 &mdash;&mdash;</div>
+          <div class="svc-title">Data &amp; Analytics<br>Engineering</div>
+          <p class="svc-desc">End-to-end data infrastructure built to give your team real visibility into your business. From ingestion to warehouse to dashboard — using the same stack already running in production. Including natural language querying: ask your data a question in plain English and get an answer back, no SQL required.</p>
+          <div class="tags"><span class="tag">BigQuery</span><span class="tag">Looker</span><span class="tag">Airbyte</span><span class="tag">ETL Pipelines</span><span class="tag">dbt</span><span class="tag">Data Warehousing</span><span class="tag">BI Dashboards</span><span class="tag">NL Querying</span><span class="tag">Text-to-SQL</span></div>
+        </div>
+        <div class="svc">
+          <div class="svc-num">03 &mdash;&mdash;</div>
           <div class="svc-title">AI Implementation<br>&amp; Consulting</div>
           <p class="svc-desc">Not sure where AI fits in your business? We identify the highest-value opportunities in your existing stack, build a practical adoption roadmap, and implement solutions your team will actually use &mdash; not just talk about.</p>
           <div class="tags"><span class="tag">AI Strategy</span><span class="tag">Tool Adoption</span><span class="tag">Process Mapping</span><span class="tag">Stack Audits</span><span class="tag">Team Enablement</span></div>
         </div>
-      </div>
-      <div class="ingage-callout reveal">
-        <div class="ingage-callout-left">
-          <div class="ingage-logo-wrap">
-            <img src="ingage_logo.png" alt="Ingage" />
-          </div>
-          <div class="ingage-callout-text">
-            <strong>Looking for Custom Ingage Applications?</strong>
-            <span>We build purpose-built pricing calculators and sales tools exclusively for the Ingage platform. If you&apos;re an Ingage user, you&apos;re in the right place.</span>
-          </div>
-        </div>
-        <a href="#contact" class="ingage-cta">Get in Touch &rarr;</a>
       </div>
     </div>
   </section>
@@ -382,13 +365,13 @@
       </div>
       <div class="pricing-grid reveal">
         <div class="pcard">
-          <div class="ptier">Custom Applications</div>
+          <div class="ptier">Data &amp; Analytics</div>
           <div class="pname">Flat Rate</div>
           <div class="pmodel">One-time fixed project fee</div>
           <div class="pdivider"></div>
           <ul class="pfeats">
             <li>Fixed price scoped before work begins &mdash; no surprises</li>
-            <li>Tiered by complexity, from simple tools to full multi-calculator builds</li>
+            <li>Data pipelines, ETL workflows, and BI dashboard builds</li>
             <li>Complete handoff with documentation included</li>
             <li>One round of revisions included</li>
             <li>No ongoing commitment required</li>
@@ -437,8 +420,8 @@
       <div class="about-grid">
         <div class="about-body reveal">
           <h2 class="sec-title" style="margin-bottom:1.4rem">Built by someone<br>who&apos;s already done it.</h2>
-          <p>Cione Solutions was founded by <strong>Nico Cione</strong>, an AI Automation Engineer with hands-on experience building production automation systems, LLM-powered workflows, and custom tooling for real businesses &mdash; not just demos.</p>
-          <p>Having built internal automation practices from the ground up &mdash; spanning CRM integrations, AI digest pipelines, market intelligence dashboards, sales tooling, and Slack bots &mdash; the work here isn&apos;t theoretical. It&apos;s the same methodology applied directly to your business.</p>
+          <p>Cione Solutions was founded by <strong>Nico Cione</strong>, an AI Automation &amp; RevOps Engineer with hands-on experience building production automation systems, LLM-powered workflows, and custom tooling for real businesses &mdash; not just demos.</p>
+          <p>As a RevOps Engineer, the automations built here are the same ones run professionally day-to-day &mdash; CRM integrations, AI digest pipelines, market intelligence dashboards, sales tooling, and Slack bots. The work isn&apos;t theoretical. It&apos;s the same methodology applied directly to your business.</p>
           <p>The firm works best with <strong>small to mid-sized businesses</strong> that move fast, have real operational friction, and want solutions that actually ship &mdash; not six-month consulting engagements with a 200-page deck at the end.</p>
           <a href="https://linkedin.com/in/nicocione" target="_blank" rel="noopener noreferrer" class="linkedin-link">
             <svg class="linkedin-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -448,7 +431,7 @@
           </a>
           <div class="stack-wrap">
             <div class="stack-label">Tech stack fluency</div>
-            <div class="stack-tags"><span class="tag">n8n</span><span class="tag">Anthropic API</span><span class="tag">OpenAI</span><span class="tag">HubSpot</span><span class="tag">Notion</span><span class="tag">Slack</span><span class="tag">Google Workspace</span><span class="tag">REST APIs</span><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">HTML/CSS</span><span class="tag">Google Cloud</span><span class="tag">Ingage</span></div>
+            <div class="stack-tags"><span class="tag">n8n</span><span class="tag">Anthropic API</span><span class="tag">OpenAI</span><span class="tag">HubSpot</span><span class="tag">Notion</span><span class="tag">Slack</span><span class="tag">Google Workspace</span><span class="tag">REST APIs</span><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">HTML/CSS</span><span class="tag">Google Cloud</span><span class="tag">Power BI</span><span class="tag">Looker</span><span class="tag">BigQuery</span><span class="tag">ETL Pipelines</span><span class="tag">dbt</span></div>
           </div>
         </div>
         <div class="reveal">
@@ -519,7 +502,7 @@
               <select name="interest">
                 <option value="" disabled selected>Select one</option>
                 <option>AI Automation &amp; Workflow Engineering</option>
-                <option>Custom Ingage Application Development</option>
+                <option>Data Pipelines &amp; BI Development</option>
                 <option>AI Implementation &amp; Consulting</option>
                 <option>Not sure yet &mdash; want to explore</option>
               </select>
@@ -541,12 +524,12 @@
                 <select name="service" required>
                   <option value="" disabled selected>Select one</option>
                   <option>AI Automation &amp; Workflow Engineering</option>
-                  <option>Custom Ingage Application Development</option>
+                  <option>Data Pipelines &amp; BI Development</option>
                   <option>AI Implementation &amp; Consulting</option>
                 </select>
               </div>
             </div>
-            <div class="fg"><label>Tools / Platforms Involved</label><input type="text" name="tools" placeholder="e.g. HubSpot, Slack, Notion, Ingage..." /></div>
+            <div class="fg"><label>Tools / Platforms Involved</label><input type="text" name="tools" placeholder="e.g. HubSpot, Slack, Notion, Power BI..." /></div>
             <div class="fg"><label>Project Description</label><textarea name="message" rows="4" placeholder="Describe what you&apos;re trying to build or automate..." required></textarea></div>
             <div class="fg">
               <label>Preferred Delivery Model</label>
